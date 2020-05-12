@@ -31,21 +31,32 @@ router.post("/",validateAccount,(req,res)=>{
     db("accounts")
     .insert(req.body)
     .then(id => res.status(200).json({id:id}))
-    //catch
+    .catch(err =>{
+        res.status(500).json({error: "There was a database error adding that account"})
+    })
 })
 
-router.put("/id",(req,res)=>{
-    db
-    //select
-    //update
-    //then
+router.put("/:id",(req,res)=>{
+    db("accounts")
+    .where({id:req.params.id})
+    .update({name:req.body.name,budget:req.body.budget})
+    .then(updated => {
+        res.status(201).json({message: `Updated account ${req.params.id}`})
+    })
+    .catch(()=>{
+        res.status(500).json({error: "There was a database error updating that account"})
+    })
 })
 
-router.delete("/id",(req,res)=>{
-    db
-    //select
-    //del()
-    //then()
+router.delete("/:id",(req,res)=>{
+    db("accounts")
+    .where({id:req.params.id})
+    .del()
+    .then((del)=>{
+        res.status(200).json({message: "Account deleted successfully"})
+    }).catch(()=>{
+        res.status(500).json({error: "There was a database error deleting that account"})
+    })
 })
 
 function validateAccount (req, res, next) {
