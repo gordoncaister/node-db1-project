@@ -7,6 +7,8 @@ const router = express.Router();
 router.get("/", (req,res) => {
     db.select("*")
     .from("accounts")
+    .limit(req.query.limit)
+    .orderBy(req.query.sortby,req.query.sortdir)
     .then(accounts => {
         res.status(200).json({data: accounts})
     })
@@ -16,6 +18,7 @@ router.get("/", (req,res) => {
 })
 
 router.get("/:id", (req,res) => {
+    console.log(req.query)
     db.select("*")
     .from("accounts")
     .where({id:req.params.id})
