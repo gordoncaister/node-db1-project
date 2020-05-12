@@ -19,7 +19,7 @@ module.exports = {
     client: "pg",
     connection: {
       host: "localhost", // if the server is not running on your computer provide the network address
-      database: "node-db-1", // <-- update
+      database: "postgres", // <-- update
       user: "postgres", // <-- update
       password: "0n0mat0p0eia", // <-- update
     },
